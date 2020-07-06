@@ -101,6 +101,11 @@ const siteSetupListReducer = ( state, action ) => {
 				...state,
 				currentTaskId: action.currentTaskId,
 			};
+		case 'SET_CURRENT_TASK':
+			return {
+				...state,
+				currentTask: action.currentTask,
+			};
 		default:
 			return state;
 	}
@@ -118,9 +123,10 @@ const SiteSetupList = ( {
 } ) => {
 	const [ state, localDispatch ] = useReducer( siteSetupListReducer, {
 		currentTaskId: null,
+		currentTask: null,
 	} );
 
-	// Set current task
+	// Set currentTaskId
 	// const [ currentTaskId, setCurrentTaskId ] = useState( null );
 	const currentTaskId = state.currentTaskId;
 	const setCurrentTaskId = ( id ) =>
@@ -129,7 +135,15 @@ const SiteSetupList = ( {
 			currentTaskId: id,
 		} );
 
-	const [ currentTask, setCurrentTask ] = useState( null );
+	// Set currentTask
+	// const [ currentTask, setCurrentTask ] = useState( null );
+	const currentTask = state.currentTask;
+	const setCurrentTask = ( task ) =>
+		localDispatch( {
+			type: 'SET_CURRENT_TASK',
+			currentTask: task,
+		} );
+
 	const [ userSelectedTask, setUserSelectedTask ] = useState( false );
 	const [ useDrillLayout, setUseDrillLayout ] = useState( false );
 	const [ currentDrillLayoutView, setCurrentDrillLayoutView ] = useState( 'nav' );
