@@ -3,6 +3,7 @@
  */
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 import { noop, uniq } from 'lodash';
 import classNames from 'classnames';
 import page from 'page';
@@ -14,19 +15,19 @@ import { bumpStat } from 'lib/analytics/mc';
 import MediaActions from 'lib/media/actions';
 import { getAllowedFileTypesForSite, isSiteAllowedFileTypesToBeTrusted } from 'lib/media/utils';
 import { VideoPressFileTypes } from 'lib/media/constants';
+import { addMedia } from 'state/media/thunks';
 
 /**
  * Style dependencies
  */
 import './upload-button.scss';
 
-export default class extends React.Component {
-	static displayName = 'MediaLibraryUploadButton';
-
+export class MediaLibraryUploadButton extends React.Component {
 	static propTypes = {
 		site: PropTypes.object,
 		onAddMedia: PropTypes.func,
 		className: PropTypes.string,
+		addMedia: PropTypes.func,
 	};
 
 	static defaultProps = {
@@ -49,7 +50,7 @@ export default class extends React.Component {
 	uploadFiles = ( event ) => {
 		if ( event.target.files && this.props.site ) {
 			MediaActions.clearValidationErrors( this.props.site.ID );
-			MediaActions.add( this.props.site, event.target.files );
+			this.props.addMedia( event.target.files, this.props.site );
 		}
 
 		this.formRef.current.reset();
@@ -95,3 +96,5 @@ export default class extends React.Component {
 		);
 	}
 }
+
+export default connect( null, { addMedia } )( MediaLibraryUploadButton );

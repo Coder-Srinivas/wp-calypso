@@ -3,6 +3,7 @@
  */
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 import { noop } from 'lodash';
 import Gridicon from 'components/gridicon';
 import { localize } from 'i18n-calypso';
@@ -14,6 +15,7 @@ import { bumpStat } from 'lib/analytics/mc';
 import DropZone from 'components/drop-zone';
 import MediaActions from 'lib/media/actions';
 import { userCan } from 'lib/site/utils';
+import { addMedia } from 'state/media/thunks';
 
 class MediaLibraryDropZone extends React.Component {
 	static displayName = 'MediaLibraryDropZone';
@@ -23,6 +25,7 @@ class MediaLibraryDropZone extends React.Component {
 		fullScreen: PropTypes.bool,
 		onAddMedia: PropTypes.func,
 		trackStats: PropTypes.bool,
+		addMedia: PropTypes.func,
 	};
 
 	static defaultProps = {
@@ -37,7 +40,7 @@ class MediaLibraryDropZone extends React.Component {
 		}
 
 		MediaActions.clearValidationErrors( this.props.site.ID );
-		MediaActions.add( this.props.site, files );
+		this.props.addMedia( files, this.props.site );
 		this.props.onAddMedia();
 
 		if ( this.props.trackStats ) {
@@ -91,4 +94,4 @@ class MediaLibraryDropZone extends React.Component {
 	}
 }
 
-export default localize( MediaLibraryDropZone );
+export default connect( null, { addMedia } )( localize( MediaLibraryDropZone ) );
