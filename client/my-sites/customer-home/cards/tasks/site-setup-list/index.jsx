@@ -121,6 +121,11 @@ const siteSetupListReducer = ( state, action ) => {
 				...state,
 				currentDrillLayoutView: action.currentDrillLayoutView,
 			};
+		case 'SET_IS_LOADING':
+			return {
+				...state,
+				isLoading: action.isLoading,
+			};
 		default:
 			return state;
 	}
@@ -189,8 +194,16 @@ const SiteSetupList = ( {
 			currentDrillLayoutView: drillLayoutView,
 		} );
 
-	const [ isLoading, setIsLoading ] = useState( false );
+	// Set isLoading
+	// const [ isLoading, setIsLoading ] = useState( false );
+	const isLoading = state.isLoading;
+	const setIsLoading = ( currentlyLoading ) =>
+		localDispatch( {
+			type: 'SET_IS_LOADING',
+			isLoading: currentlyLoading,
+		} );
 
+	// Data layer dispatch
 	const dispatch = useDispatch();
 
 	const isDomainUnverified =
