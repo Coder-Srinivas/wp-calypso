@@ -63,19 +63,19 @@ export const adminSections = memoize( ( siteSlug ) => [
 	},
 	{
 		title: translate( 'Change my homepage' ),
-		link: `/customize/${ siteSlug }`,
+		link: `/customize/${ siteSlug }?autofocus[section]=static_front_page`,
 		synonyms: [ 'home', 'homepage' ],
 		icon: 'customize',
 	},
 	{
 		title: translate( 'Edit my menu' ),
-		link: `/customize/${ siteSlug }`,
+		link: `/customize/${ siteSlug }?autofocus[panel]=nav_menus`,
 		synonyms: [ 'menu' ],
 		icon: 'customize',
 	},
 	{
 		title: translate( 'Set a site logo' ),
-		link: `/customize/${ siteSlug }`,
+		link: `/customize/${ siteSlug }?autofocus[section]=title_tagline`,
 		synonyms: [ 'logo', 'identity' ],
 		icon: 'customize',
 	},
