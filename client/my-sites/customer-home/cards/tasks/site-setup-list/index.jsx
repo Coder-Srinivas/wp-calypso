@@ -116,6 +116,11 @@ const siteSetupListReducer = ( state, action ) => {
 				...state,
 				useDrillLayout: action.useDrillLayout,
 			};
+		case 'SET_CURRENT_DRILL_LAYOUT_VIEW':
+			return {
+				...state,
+				currentDrillLayoutView: action.currentDrillLayoutView,
+			};
 		default:
 			return state;
 	}
@@ -132,10 +137,11 @@ const SiteSetupList = ( {
 	userEmail,
 } ) => {
 	const [ state, localDispatch ] = useReducer( siteSetupListReducer, {
-		currentTaskId: null,
-		currentTask: null,
-		userSelectedTask: false,
-		useDrillLayout: false,
+		currentTaskId: null, // id of the current task
+		currentTask: null, // full object for current task
+		userSelectedTask: false, // was the currently selected task selected by the user
+		useDrillLayout: false, // is using small-screen layout view
+		currentDrillLayoutView: 'nav', // viewing a card on the list of checklist steps?
 	} );
 
 	// Set currentTaskId
@@ -174,7 +180,15 @@ const SiteSetupList = ( {
 			useDrillLayout: shouldUseDrillLayout,
 		} );
 
-	const [ currentDrillLayoutView, setCurrentDrillLayoutView ] = useState( 'nav' );
+	// Set currentDrillLayoutView
+	// const [ currentDrillLayoutView, setCurrentDrillLayoutView ] = useState( 'nav' );
+	const currentDrillLayoutView = state.currentDrillLayoutView;
+	const setCurrentDrillLayoutView = ( drillLayoutView ) =>
+		localDispatch( {
+			type: 'SET_CURRENT_DRILL_LAYOUT_VIEW',
+			currentDrillLayoutView: drillLayoutView,
+		} );
+
 	const [ isLoading, setIsLoading ] = useState( false );
 
 	const dispatch = useDispatch();
