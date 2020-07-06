@@ -80,6 +80,12 @@ export const getTask = (
 					"Next, we'll guide you through setting up and launching your site."
 				),
 				actionText: 'Get started',
+				...( ! task.isCompleted && {
+					actionDispatch: requestSiteChecklistTaskUpdate,
+					actionDispatchArgs: [ siteId, task.id ],
+				} ),
+				actionAdvanceToNext: true,
+				completeOnView: true,
 			};
 			break;
 		case 'domain_verified':
