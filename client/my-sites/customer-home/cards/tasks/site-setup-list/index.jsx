@@ -141,6 +141,10 @@ const SiteSetupList = ( {
 	taskUrls,
 	userEmail,
 } ) => {
+	// Data layer dispatch
+	const dispatch = useDispatch();
+
+	// Local state reducer
 	const [ state, localDispatch ] = useReducer( siteSetupListReducer, {
 		currentTaskId: null, // id of the current task
 		currentTask: null, // full object for current task
@@ -150,7 +154,6 @@ const SiteSetupList = ( {
 	} );
 
 	// Set currentTaskId
-	// const [ currentTaskId, setCurrentTaskId ] = useState( null );
 	const currentTaskId = state.currentTaskId;
 	const setCurrentTaskId = ( id ) =>
 		localDispatch( {
@@ -159,7 +162,6 @@ const SiteSetupList = ( {
 		} );
 
 	// Set currentTask
-	// const [ currentTask, setCurrentTask ] = useState( null );
 	const currentTask = state.currentTask;
 	const setCurrentTask = ( task ) =>
 		localDispatch( {
@@ -168,7 +170,6 @@ const SiteSetupList = ( {
 		} );
 
 	// Set userSelectedTask
-	// const [ userSelectedTask, setUserSelectedTask ] = useState( false );
 	const userSelectedTask = state.currentTask;
 	const setUserSelectedTask = ( isUserSelectedTask ) =>
 		localDispatch( {
@@ -177,7 +178,6 @@ const SiteSetupList = ( {
 		} );
 
 	// Set useDrillLayout
-	// const [ useDrillLayout, setUseDrillLayout ] = useState( false );
 	const useDrillLayout = state.useDrillLayout;
 	const setUseDrillLayout = ( shouldUseDrillLayout ) =>
 		localDispatch( {
@@ -186,7 +186,6 @@ const SiteSetupList = ( {
 		} );
 
 	// Set currentDrillLayoutView
-	// const [ currentDrillLayoutView, setCurrentDrillLayoutView ] = useState( 'nav' );
 	const currentDrillLayoutView = state.currentDrillLayoutView;
 	const setCurrentDrillLayoutView = ( drillLayoutView ) =>
 		localDispatch( {
@@ -195,16 +194,12 @@ const SiteSetupList = ( {
 		} );
 
 	// Set isLoading
-	// const [ isLoading, setIsLoading ] = useState( false );
 	const isLoading = state.isLoading;
 	const setIsLoading = ( currentlyLoading ) =>
 		localDispatch( {
 			type: 'SET_IS_LOADING',
 			isLoading: currentlyLoading,
 		} );
-
-	// Data layer dispatch
-	const dispatch = useDispatch();
 
 	const isDomainUnverified =
 		tasks.filter( ( task ) => task.id === 'domain_verified' && ! task.isCompleted ).length > 0;
