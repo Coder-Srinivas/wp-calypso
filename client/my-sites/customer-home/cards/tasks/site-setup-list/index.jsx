@@ -111,6 +111,11 @@ const siteSetupListReducer = ( state, action ) => {
 				...state,
 				userSelectedTask: action.userSelectedTask,
 			};
+		case 'SET_USE_DRILL_LAYOUT':
+			return {
+				...state,
+				useDrillLayout: action.useDrillLayout,
+			};
 		default:
 			return state;
 	}
@@ -130,6 +135,7 @@ const SiteSetupList = ( {
 		currentTaskId: null,
 		currentTask: null,
 		userSelectedTask: false,
+		useDrillLayout: false,
 	} );
 
 	// Set currentTaskId
@@ -159,9 +165,18 @@ const SiteSetupList = ( {
 			userSelectedTask: isUserSelectedTask,
 		} );
 
-	const [ useDrillLayout, setUseDrillLayout ] = useState( false );
+	// Set useDrillLayout
+	// const [ useDrillLayout, setUseDrillLayout ] = useState( false );
+	const useDrillLayout = state.useDrillLayout;
+	const setUseDrillLayout = ( shouldUseDrillLayout ) =>
+		localDispatch( {
+			type: 'SET_USE_DRILL_LAYOUT',
+			useDrillLayout: shouldUseDrillLayout,
+		} );
+
 	const [ currentDrillLayoutView, setCurrentDrillLayoutView ] = useState( 'nav' );
 	const [ isLoading, setIsLoading ] = useState( false );
+
 	const dispatch = useDispatch();
 
 	const isDomainUnverified =
