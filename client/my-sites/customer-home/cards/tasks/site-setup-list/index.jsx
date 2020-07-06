@@ -4,7 +4,7 @@
 import { Card, Button } from '@automattic/components';
 import { isDesktop, isWithinBreakpoint, subscribeIsWithinBreakpoint } from '@automattic/viewport';
 import { translate } from 'i18n-calypso';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import page from 'page';
 import classnames from 'classnames';
@@ -94,6 +94,18 @@ const trackTaskDisplay = ( dispatch, task, siteId ) => {
 	);
 };
 
+const siteSetupListReducer = ( state, action ) => {
+	switch ( action.type ) {
+		case 'SET_CURRENT_TASK_ID':
+			return {
+				...state,
+				currentTaskId: action.currentTaskId,
+			};
+		default:
+			return state;
+	}
+};
+
 const SiteSetupList = ( {
 	emailVerificationStatus,
 	isEmailUnverified,
@@ -104,7 +116,19 @@ const SiteSetupList = ( {
 	taskUrls,
 	userEmail,
 } ) => {
-	const [ currentTaskId, setCurrentTaskId ] = useState( null );
+	const [ state, localDispatch ] = useReducer( siteSetupListReducer, {
+		currentTaskId: null,
+	} );
+
+	// Set current task
+	// const [ currentTaskId, setCurrentTaskId ] = useState( null );
+	const currentTaskId = state.currentTaskId;
+	const setCurrentTaskId = ( id ) =>
+		localDispatch( {
+			type: 'SET_CURRENT_TASK_ID',
+			currentTaskId: id,
+		} );
+
 	const [ currentTask, setCurrentTask ] = useState( null );
 	const [ userSelectedTask, setUserSelectedTask ] = useState( false );
 	const [ useDrillLayout, setUseDrillLayout ] = useState( false );
