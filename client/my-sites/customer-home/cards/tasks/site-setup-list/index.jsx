@@ -37,7 +37,7 @@ import { getTask } from './get-task';
  */
 import './style.scss';
 
-const startTask = ( dispatch, task, siteId, advanceToNextInCompleteTask ) => {
+const startTask = ( dispatch, task, siteId, advanceToNextIncompleteTask ) => {
 	dispatch(
 		recordTracksEvent( 'calypso_checklist_task_start', {
 			checklist_name: 'new_blog',
@@ -61,7 +61,7 @@ const startTask = ( dispatch, task, siteId, advanceToNextInCompleteTask ) => {
 	}
 
 	if ( task.actionAdvanceToNext ) {
-		advanceToNextInCompleteTask();
+		advanceToNextIncompleteTask();
 	}
 };
 
@@ -291,7 +291,7 @@ const SiteSetupList = ( {
 		return null;
 	}
 
-	const advanceToNextInCompleteTask = () => {
+	const advanceToNextIncompleteTask = () => {
 		localDispatch( {
 			type: 'SET_CURRENT_TASK_ID',
 			currentTaskId: firstIncompleteTask.id,
@@ -362,7 +362,7 @@ const SiteSetupList = ( {
 									className="site-setup-list__task-action task__action"
 									primary
 									onClick={ () =>
-										startTask( dispatch, currentTask, siteId, advanceToNextInCompleteTask )
+										startTask( dispatch, currentTask, siteId, advanceToNextIncompleteTask )
 									}
 									disabled={
 										currentTask.isDisabled ||
